@@ -23,9 +23,7 @@ class X {
   X(this.name);
 }
 
-/// TODO: Inheritance, classes
-
-void main(List<String> args) {
+example_1() {
   // Person person_1 = Person();
   // person_1.name = 'l';
   // person_1.age = '23';
@@ -41,4 +39,41 @@ void main(List<String> args) {
   print(x.name);
   print(X.age); // by class name
   // x.name = 'genie'; // not allowed after contruction
+}
+
+/// Inheritance, classes
+class Vehicle {
+  String model;
+  int year;
+
+  Vehicle(this.model, this.year) {
+    print(this.model);
+    print(this.year);
+  }
+
+  void showOutput() {
+    print(model);
+    print(year); // same as this.year
+  }
+}
+
+class Car extends Vehicle {
+  double price;
+
+  Car(String model, int year, this.price) : super(model, year);
+
+  void showOutput() {
+    super.showOutput();
+    print(this.price);
+  }
+}
+
+example_2() {
+  var car1 = Car('Accord', 2014, 150000);
+  car1.showOutput();
+}
+
+void main(List<String> args) {
+  // example_1();
+  example_2();
 }
