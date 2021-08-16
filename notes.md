@@ -19,6 +19,9 @@
     - AOT - Ahead of time 
     - JIT - Just in time
 
+### TODO: 
+1. setup Android Studio   
+1. resize icons using Android Studio
 ### commands
 ~~~sh
     $ flutter doctor -v
@@ -45,6 +48,14 @@
     1. https://flutter.dev/docs/development/tools/vs-code
     1. https://public-apis.io/
     1. https://pub.dev/
+
+1. Helpers 
+    1. Icons
+        1. icon generator - https://appicon.co/  
+        1. https://icons8.com/
+        1. https://www.vecteezy.com/
+        1. https://www.canva.com
+
 
 1. Documentation
     1. https://api.flutter.dev/flutter/material/Scaffold-class.html
@@ -77,8 +88,6 @@
         ln -s "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" jdk
         flutter doctor -v
 
-    ## Android Studio
-    ## TODO: 
     ~~~
 
 1. Dart
