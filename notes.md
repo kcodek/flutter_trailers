@@ -9,6 +9,11 @@
                 - Text
                 - Network Image
 
+
+1. `Scaffold` class -  Implements the basic material design visual layout structure.
+1. `Ctrl+.` - options to add code snippets, intellisense
+
+
 1. Dart Basics
  - Supports two compilations   
     - AOT - Ahead of time 
@@ -19,7 +24,12 @@
     $ flutter doctor -v
     $ flutter --version
     $ flutter build web
-    $ flutter run -d chrome
+
+    # To run the app
+    $ flutter run -d chrome # CORS - images from other sources are not loaded
+    $ flutter run -d chrome --web-renderer html # this works
+    # to generate a production build
+    $ flutter build web --web-renderer html --release 
 ~~~
 
 ### References
@@ -35,7 +45,9 @@
     1. https://flutter.dev/docs/development/tools/vs-code
     1. https://public-apis.io/
     1. https://pub.dev/
-    
+
+1. Documentation
+    1. https://api.flutter.dev/flutter/material/Scaffold-class.html
 
 1. For android studio setup
     - can't find bundled Java 
@@ -66,8 +78,7 @@
         flutter doctor -v
 
     ## Android Studio
-            
-
+    ## TODO: 
     ~~~
 
 1. Dart
