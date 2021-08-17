@@ -13,11 +13,18 @@
 1. `Scaffold` class -  Implements the basic material design visual layout structure.
 1. `Ctrl+.` - options to add code snippets, intellisense
 
+1. Widgets
+    - Single Child - e.g. `Container` widget is similar to a div
+    - Multi Child 
+
+
+------
 
 1. Dart Basics
  - Supports two compilations   
     - AOT - Ahead of time 
     - JIT - Just in time
+ - Hot Reload, Hot Restart   
 
 ### TODO: 
 1. setup Android Studio   
@@ -38,7 +45,6 @@
 ### References
 1. Flutter
     1. https://github.com/flutter/flutter
-    1. https://flutter.dev/docs
     1. https://flutter.dev/docs/reference/flutter-cli
     1. https://pub.dev/packages/get
     1. https://flutter.dev/docs/cookbook
@@ -49,16 +55,20 @@
     1. https://public-apis.io/
     1. https://pub.dev/
 
+
+1. Documentation
+    1. https://api.flutter.dev/flutter/material/Scaffold-class.html
+    1. https://flutter.dev/docs/development/ui/widgets
+    1. https://flutter.dev/docs
+    1. https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e
+
+
 1. Helpers 
     1. Icons
         1. icon generator - https://appicon.co/  
         1. https://icons8.com/
         1. https://www.vecteezy.com/
         1. https://www.canva.com
-
-
-1. Documentation
-    1. https://api.flutter.dev/flutter/material/Scaffold-class.html
 
 1. For android studio setup
     - can't find bundled Java 
