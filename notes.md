@@ -16,15 +16,17 @@
 1. Widgets
     - Single Child - e.g. `Container` widget is similar to a div
     - Multi Child 
+    - A `stateless` widget never changes. Icon, IconButton, and Text are examples of stateless widgets. Stateless widgets subclass StatelessWidget. A `stateful` widget is dynamic: for example, it can change its appearance in response to events triggered by user interactions or when it receives data. Checkbox, Radio, Slider, InkWell, Form, and TextField are examples of stateful widgets. Stateful widgets subclass StatefulWidget.
 
-
+1. MaterialApp Class
+    - An application that uses material design. A convenience widget that wraps a number of widgets that are commonly required for material design applications. It builds upon a WidgetsApp by adding material-design specific functionality, such as AnimatedTheme and GridPaper.
 ------
 
 1. Dart Basics
  - Supports two compilations   
     - AOT - Ahead of time 
     - JIT - Just in time
- - Hot Reload, Hot Restart   
+ - Hot Reload, Hot Restart   - use StatelessWidget, StatefulWidget classes
 
 ### TODO: 
 1. setup Android Studio   
@@ -54,13 +56,17 @@
     1. https://flutter.dev/docs/development/tools/vs-code
     1. https://public-apis.io/
     1. https://pub.dev/
-
-
-1. Documentation
+    1. https://api.flutter.dev/flutter/widgets/Container-class.html
+    1. https://api.flutter.dev/flutter/material/MaterialApp-class.html
     1. https://api.flutter.dev/flutter/material/Scaffold-class.html
     1. https://flutter.dev/docs/development/ui/widgets
     1. https://flutter.dev/docs
-    1. https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e
+    1. https://github.com/londonappbrewery/Flutter-Course-Resources
+    - Layout
+      1. https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e
+    - DevTools
+        1. https://flutter.dev/docs/development/tools/devtools/inspector
+        1. https://dart.dev/tools/dart-devtools
 
 
 1. Helpers 
@@ -69,6 +75,10 @@
         1. https://icons8.com/
         1. https://www.vecteezy.com/
         1. https://www.canva.com
+        1. https://www.materialpalette.com/
+    1.  Fonts
+        1. https://fonts.google.com/
+
 
 1. For android studio setup
     - can't find bundled Java 
