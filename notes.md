@@ -20,6 +20,12 @@
 
 1. MaterialApp Class
     - An application that uses material design. A convenience widget that wraps a number of widgets that are commonly required for material design applications. It builds upon a WidgetsApp by adding material-design specific functionality, such as AnimatedTheme and GridPaper.
+
+1. Forms
+    - How do you run a callback function every time the text changes? With Flutter, you have two options:
+    1 .Supply an `onChanged()` callback to a `TextField`or a `TextFormField`.
+    2. Use a `TextEditingController`.
+    3. Remember to `dispose` of the `TextEditingController` when it’s no longer needed. This ensures that you discard any resources used by the object.
 ------
 
 1. Dart Basics
@@ -35,9 +41,14 @@
 ~~~sh
     $ flutter doctor -v
     $ flutter --version
+    ## To run the Android app
+    # 1. create a Emulator using Andriod AVD Manager(e.g. Nexus 7 tablet device)
+    # 2. Add the following to /Users/kishored/coding/flutter_trailers/haplovms/android/local.properties
+    # ndk.dir=/Users/kishored/Library/Android/sdk/ndk/23.0.7599858
+    $ flutter run
+    ############################################
+    ## To run the web app
     $ flutter build web
-
-    # To run the app
     $ flutter run -d chrome # CORS - images from other sources are not loaded
     $ flutter run -d chrome --web-renderer html # this works
     # to generate a production build
@@ -78,6 +89,8 @@
         1. https://www.materialpalette.com/
     1.  Fonts
         1. https://fonts.google.com/
+    1. Sounds 
+        1. https://freesound.org/
 
 
 1. For android studio setup
