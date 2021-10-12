@@ -16,10 +16,10 @@
 1. Widgets
     - Single Child - e.g. `Container` widget is similar to a div
     - Multi Child 
-    - A `stateless` widget never changes. Icon, IconButton, and Text are examples of stateless widgets. Stateless widgets subclass StatelessWidget. 
+    - A `stateless` widget never changes. Icon, IconButton, and Text are examples of stateless widgets. Stateless widgets subclass statelessWidget. 
         - To create a Stateless widget, we have to override the `build()` method
 
-    - A `stateful` widget is dynamic: for example, it can change its appearance in response to events triggered by user interactions or when it receives data. Checkbox, Radio, Slider, InkWell, Form, and TextField are examples of stateful widgets. Stateful widgets subclass StatefulWidget.
+    - A `stateful` widget is dynamic: for example, it can change its appearance in response to events triggered by user interactions or when it receives data. Checkbox, Radio, Slider, InkWell, Form, and TextField are examples of stateful widgets. Stateful widgets subclass statefulWidget.
         - To create a Stateful widget, we have to override the `createState()` method, which returns the state of the widget. 
 
 
@@ -48,14 +48,24 @@
 - Lists
     - Displaying lists of data is a fundamental pattern for mobile apps. Flutter includes the `ListView` widget to make working with lists a breeze.
 
+------
+1. VSCode tips  for flutter development
+    1. shortcuts for templates
+        - `stl`: Stateless widget,
+        - `stfl`: Stateful widget
+        - `initS`: initState
+        - `dis`: dispose
+        - `listViewB`: ListView.builder
 
+    1. `cmd+.` - to show options like Extract Method, Wrap into a widget,...
+    1. `cmd+D` - to add selection, change all instances of text in one shot.
 ------
 
 1. Dart Basics
  - Supports two compilations   
     - AOT - Ahead of time 
     - JIT - Just in time
- - Hot Reload, Hot Restart   - use StatelessWidget, StatefulWidget classes
+ - Hot Reload, Hot Restart   - use statelessWidget, statefulWidget classes
 
 ### TODO: 
 1. setup Android Studio   
@@ -66,8 +76,8 @@
     $ flutter --version
     ## To run the Android app
     # 1. create a Emulator using Andriod AVD Manager(e.g. Nexus 7 tablet device)
-    # 2. Add the following to /Users/kishored/coding/flutter_trailers/haplovms/android/local.properties
-    # ndk.dir=/Users/kishored/Library/Android/sdk/ndk/23.0.7599858
+    # 2. Add the following to ~/coding/flutter_trailers/haplovms/android/local.properties
+    # ndk.dir=~/Library/Android/sdk/ndk/23.0.7599858
     $ flutter run
     ############################################
     ## To run the web app
@@ -78,6 +88,13 @@
     $ flutter build web --web-renderer html --release 
 ~~~
 
+### Errors & Exceptions
+1.  > What went wrong: Execution failed for task ':app:stripDebugDebugSymbols'.
+    > NDK at ~/Library/Android/sdk/ndk-bundle did not have a source.properties file
+    - Fix: 
+    1. Add the following to `local.properties`
+        @ ~/flutter_trailers/haplovms/android/local.properties`
+        - `ndk.dir=~/Library/Android/sdk/ndk/23.0.7599858`
 ### References
 1. Flutter
     1. https://github.com/flutter/flutter
