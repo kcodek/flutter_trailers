@@ -1,4 +1,5 @@
 import 'package:consuming_rest_api/models/note_for_listing.dart';
+import 'package:consuming_rest_api/views/note_delete.dart';
 import 'package:consuming_rest_api/views/note_modify.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +38,7 @@ class NoteList extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => const NoteModify()));
+                .push(MaterialPageRoute(builder: (_) => NoteModify()));
           },
           child: const Icon(Icons.add)),
       body: ListView.separated(
@@ -47,13 +48,38 @@ class NoteList extends StatelessWidget {
           color: Colors.green,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text(
-              notes[index].noteTitle,
-              style: TextStyle(color: Theme.of(context).primaryColor),
+          return Dismissible(
+            key: ValueKey(notes[index].noteID),
+            direction: DismissDirection.startToEnd,
+            onDismissed: (direction) {},
+            confirmDismiss: (direction) async {
+              final result = await showDialog(
+                  context: context, builder: (_) => const NoteDelete());
+              print(result);
+              return result;
+            },
+            background: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.only(left: 16),
+              child: const Align(
+                child: Icon(Icons.delete, color: Colors.white),
+                alignment: Alignment.centerLeft,
+              ),
             ),
-            subtitle: Text(
-                'Last edited on ${formatDateTime(notes[index].latestEditDateTime)}'),
+            child: ListTile(
+              title: Text(
+                notes[index].noteTitle,
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+              subtitle: Text(
+                  'Last edited on ${formatDateTime(notes[index].latestEditDateTime)}'),
+              onTap: () {
+                // based on noteId
+                Navigator.of(context).push(MaterialPageRoute(
+                    // specify the name of the parameter('noteID') as it's a not a required param
+                    builder: (_) => NoteModify(noteID: notes[index].noteID)));
+              },
+            ),
           );
         },
       ),
