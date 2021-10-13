@@ -1,32 +1,35 @@
 import 'package:consuming_rest_api/models/note_for_listing.dart';
+import 'package:consuming_rest_api/services/notes_service.dart';
 import 'package:consuming_rest_api/views/note_delete.dart';
 import 'package:consuming_rest_api/views/note_modify.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
-class NoteList extends StatelessWidget {
+class NoteList extends StatefulWidget {
   NoteList({Key? key}) : super(key: key);
 
-  final notes = [
-    NoteForListing(
-        noteID: "1",
-        createDateTime: DateTime.now(),
-        latestEditDateTime: DateTime.now(),
-        noteTitle: "Note 1"),
-    NoteForListing(
-        noteID: "2",
-        createDateTime: DateTime.now(),
-        latestEditDateTime: DateTime.now(),
-        noteTitle: "Note 2"),
-    NoteForListing(
-        noteID: "3",
-        createDateTime: DateTime.now(),
-        latestEditDateTime: DateTime.now(),
-        noteTitle: "Note 3")
-  ];
+  @override
+  State<NoteList> createState() => _NoteListState();
+}
 
-  //helper function to format the datetime
+class _NoteListState extends State<NoteList> {
+  NotesService get service => GetIt.I<NotesService>();
+
+  List<NoteForListing> notes = [];
+
   String formatDateTime(DateTime dateTime) {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+  }
+
+  @override
+  void initState() {
+    notes = service.getNotesList();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -51,7 +54,12 @@ class NoteList extends StatelessWidget {
           return Dismissible(
             key: ValueKey(notes[index].noteID),
             direction: DismissDirection.startToEnd,
-            onDismissed: (direction) {},
+            onDismissed: (direction) {
+              // //Exception A dismissed Dismissible widget is still part of the tree
+              // setState(() {
+              //   notes.removeAt(index);
+              // });
+            },
             confirmDismiss: (direction) async {
               final result = await showDialog(
                   context: context, builder: (_) => const NoteDelete());
