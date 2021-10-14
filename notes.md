@@ -43,7 +43,9 @@
     - To connect the two screens together with an animation, wrap the Image widget on both screens in a Hero widget. The Hero widget requires two arguments:
         - `tag`: An object that identifies the `Hero`. It must be the same on both screens.
         - `child`: The widget to animate across screens.
-
+1. Null Safety
+    - Try to create non-nullable variables when possible, as these will be guaranteed to be not null at compile time.
+    - If you know that a nullable expression won't be null, you can assign it to a non-nullable variable with the `!` operator.
 
 - Lists
     - Displaying lists of data is a fundamental pattern for mobile apps. Flutter includes the `ListView` widget to make working with lists a breeze.
@@ -131,7 +133,8 @@
         1. https://fonts.google.com/
     1. Sounds 
         1. https://freesound.org/
-
+    1. sample request-response
+        1. https://reqres.in/  
 
 1. For android studio setup
     - can't find bundled Java 
@@ -166,3 +169,4 @@
 1. Dart
     1. https://www.youtube.com/watch?v=Ej_Pcr4uC2Q
     1. https://github.com/mahmudahsan/flutter
+    1. https://codewithandrea.com/videos/dart-null-safety-ultimate-guide-non-nullable-types/

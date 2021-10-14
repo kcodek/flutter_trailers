@@ -1,3 +1,4 @@
+import 'package:consuming_rest_api/models/api_response.dart';
 import 'package:consuming_rest_api/models/note_for_listing.dart';
 import 'package:consuming_rest_api/services/notes_service.dart';
 import 'package:consuming_rest_api/views/note_delete.dart';
@@ -15,7 +16,9 @@ class NoteList extends StatefulWidget {
 class _NoteListState extends State<NoteList> {
   NotesService get service => GetIt.I<NotesService>();
 
-  List<NoteForListing> notes = [];
+  //null safety
+  late APIResponse<List<NoteForListing>> _apiResponse;
+  bool _isloading = false;
 
   String formatDateTime(DateTime dateTime) {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
@@ -23,8 +26,19 @@ class _NoteListState extends State<NoteList> {
 
   @override
   void initState() {
-    notes = service.getNotesList();
+    _fetchNotes();
     super.initState();
+  }
+
+  void _fetchNotes() async {
+    setState(() {
+      _isloading = true;
+    });
+    _apiResponse = await service.getNotesList();
+
+    setState(() {
+      _isloading = false;
+    });
   }
 
   @override
@@ -44,53 +58,57 @@ class _NoteListState extends State<NoteList> {
                 .push(MaterialPageRoute(builder: (_) => NoteModify()));
           },
           child: const Icon(Icons.add)),
-      body: ListView.separated(
-        itemCount: notes.length,
-        separatorBuilder: (_, __) => const Divider(
-          height: 1,
-          color: Colors.green,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return Dismissible(
-            key: ValueKey(notes[index].noteID),
-            direction: DismissDirection.startToEnd,
-            onDismissed: (direction) {
-              // //Exception A dismissed Dismissible widget is still part of the tree
-              // setState(() {
-              //   notes.removeAt(index);
-              // });
-            },
-            confirmDismiss: (direction) async {
-              final result = await showDialog(
-                  context: context, builder: (_) => const NoteDelete());
-              print(result);
-              return result;
-            },
-            background: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.only(left: 16),
-              child: const Align(
-                child: Icon(Icons.delete, color: Colors.white),
-                alignment: Alignment.centerLeft,
+      body: _isloading
+          ? CircularProgressIndicator()
+          : ListView.separated(
+              itemCount: _apiResponse.data.length,
+              separatorBuilder: (_, __) => const Divider(
+                height: 1,
+                color: Colors.green,
               ),
-            ),
-            child: ListTile(
-              title: Text(
-                notes[index].noteTitle,
-                style: TextStyle(color: Theme.of(context).primaryColor),
-              ),
-              subtitle: Text(
-                  'Last edited on ${formatDateTime(notes[index].latestEditDateTime)}'),
-              onTap: () {
-                // based on noteId
-                Navigator.of(context).push(MaterialPageRoute(
-                    // specify the name of the parameter('noteID') as it's a not a required param
-                    builder: (_) => NoteModify(noteID: notes[index].noteID)));
+              itemBuilder: (BuildContext context, int index) {
+                return Dismissible(
+                  key: ValueKey(_apiResponse.data[index].noteID),
+                  direction: DismissDirection.startToEnd,
+                  onDismissed: (direction) {
+                    // //Exception A dismissed Dismissible widget is still part of the tree
+                    // setState(() {
+                    //   notes.removeAt(index);
+                    // });
+                  },
+                  confirmDismiss: (direction) async {
+                    final result = await showDialog(
+                        context: context, builder: (_) => const NoteDelete());
+                    print(result);
+                    return result;
+                  },
+                  background: Container(
+                    color: Colors.red,
+                    padding: const EdgeInsets.only(left: 16),
+                    child: const Align(
+                      child: Icon(Icons.delete, color: Colors.white),
+                      alignment: Alignment.centerLeft,
+                    ),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      _apiResponse.data[index].noteTitle,
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                    subtitle: Text(
+                        'Last edited on ${formatDateTime(_apiResponse.data[index].latestEditDateTime)}'),
+                    // 'Last edited on ${formatDateTime(_apiResponse.data[index].latestEditDateTime ?? _apiResponse.data[index].createDateTime)}'),
+                    onTap: () {
+                      // based on noteId
+                      Navigator.of(context).push(MaterialPageRoute(
+                          // specify the name of the parameter('noteID') as it's a not a required param
+                          builder: (_) => NoteModify(
+                              noteID: _apiResponse.data[index].noteID)));
+                    },
+                  ),
+                );
               },
             ),
-          );
-        },
-      ),
     );
   }
 }

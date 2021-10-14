@@ -6,12 +6,14 @@ class NoteForListing {
   DateTime latestEditDateTime;
 
   NoteForListing({
-    this.noteID = "0",
-    this.noteTitle = "Default title",
-    //The default value of an optional parameter must be constant.
-    // this.createDateTime = DateTime.now(),
+    required this.noteID,
+    required this.noteTitle,
     DateTime? createDateTime,
     DateTime? latestEditDateTime,
+    //The default value of an optional parameter must be constant.
+    // this.createDateTime = DateTime.now(),
+    //
+    // DateTime? latestEditDateTime,
   })  : createDateTime = createDateTime ?? DateTime.now(),
         latestEditDateTime = DateTime.now();
 }
