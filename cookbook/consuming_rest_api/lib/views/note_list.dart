@@ -58,57 +58,65 @@ class _NoteListState extends State<NoteList> {
                 .push(MaterialPageRoute(builder: (_) => NoteModify()));
           },
           child: const Icon(Icons.add)),
-      body: _isloading
-          ? CircularProgressIndicator()
-          : ListView.separated(
-              itemCount: _apiResponse.data.length,
-              separatorBuilder: (_, __) => const Divider(
-                height: 1,
-                color: Colors.green,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return Dismissible(
-                  key: ValueKey(_apiResponse.data[index].noteID),
-                  direction: DismissDirection.startToEnd,
-                  onDismissed: (direction) {
-                    // //Exception A dismissed Dismissible widget is still part of the tree
-                    // setState(() {
-                    //   notes.removeAt(index);
-                    // });
-                  },
-                  confirmDismiss: (direction) async {
-                    final result = await showDialog(
-                        context: context, builder: (_) => const NoteDelete());
-                    print(result);
-                    return result;
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    padding: const EdgeInsets.only(left: 16),
-                    child: const Align(
-                      child: Icon(Icons.delete, color: Colors.white),
-                      alignment: Alignment.centerLeft,
-                    ),
-                  ),
-                  child: ListTile(
-                    title: Text(
-                      _apiResponse.data[index].noteTitle,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                    subtitle: Text(
-                        'Last edited on ${formatDateTime(_apiResponse.data[index].latestEditDateTime)}'),
-                    // 'Last edited on ${formatDateTime(_apiResponse.data[index].latestEditDateTime ?? _apiResponse.data[index].createDateTime)}'),
-                    onTap: () {
-                      // based on noteId
-                      Navigator.of(context).push(MaterialPageRoute(
-                          // specify the name of the parameter('noteID') as it's a not a required param
-                          builder: (_) => NoteModify(
-                              noteID: _apiResponse.data[index].noteID)));
-                    },
-                  ),
-                );
-              },
+      body: Builder(
+        builder: (_) {
+          if (_isloading) {
+            return const CircularProgressIndicator();
+          }
+          if (_apiResponse.error) {
+            return Center(child: Text(_apiResponse.errorMessage));
+          }
+          return ListView.separated(
+            itemCount: _apiResponse.data.length,
+            separatorBuilder: (_, __) => const Divider(
+              height: 1,
+              color: Colors.green,
             ),
+            itemBuilder: (BuildContext context, int index) {
+              return Dismissible(
+                key: ValueKey(_apiResponse.data[index].noteID),
+                direction: DismissDirection.startToEnd,
+                onDismissed: (direction) {
+                  // //Exception A dismissed Dismissible widget is still part of the tree
+                  // setState(() {
+                  //   notes.removeAt(index);
+                  // });
+                },
+                confirmDismiss: (direction) async {
+                  final result = await showDialog(
+                      context: context, builder: (_) => const NoteDelete());
+                  print(result);
+                  return result;
+                },
+                background: Container(
+                  color: Colors.red,
+                  padding: const EdgeInsets.only(left: 16),
+                  child: const Align(
+                    child: Icon(Icons.delete, color: Colors.white),
+                    alignment: Alignment.centerLeft,
+                  ),
+                ),
+                child: ListTile(
+                  title: Text(
+                    _apiResponse.data[index].noteTitle,
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                  subtitle: Text(
+                      'Last edited on ${formatDateTime(_apiResponse.data[index].latestEditDateTime)}'),
+                  // 'Last edited on ${formatDateTime(_apiResponse.data[index].latestEditDateTime ?? _apiResponse.data[index].createDateTime)}'),
+                  onTap: () {
+                    // based on noteId
+                    Navigator.of(context).push(MaterialPageRoute(
+                        // specify the name of the parameter('noteID') as it's a not a required param
+                        builder: (_) => NoteModify(
+                            noteID: _apiResponse.data[index].noteID)));
+                  },
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
