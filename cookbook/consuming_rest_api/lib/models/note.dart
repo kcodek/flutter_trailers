@@ -1,13 +1,14 @@
-class NoteForListing {
-  // for positional parameters
+class Note {
   String? noteID;
   String? noteTitle;
+  String? noteContent;
   DateTime createDateTime;
   DateTime latestEditDateTime;
 
-  NoteForListing({
+  Note({
     this.noteID,
     this.noteTitle,
+    this.noteContent,
     DateTime? createDateTime,
     DateTime? latestEditDateTime,
     //The default value of an optional parameter must be constant.
