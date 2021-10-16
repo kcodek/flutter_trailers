@@ -64,7 +64,7 @@ class _NoteListState extends State<NoteList> {
             return const CircularProgressIndicator();
           }
           // A nullable expression can't be used as a condition.
-          if (_apiResponse.error != null) {
+          if (_apiResponse.error == true) {
             return Center(child: Text(_apiResponse.errorMessage!));
           }
           return ListView.separated(

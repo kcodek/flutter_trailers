@@ -17,4 +17,15 @@ class Note {
     // DateTime? latestEditDateTime,
   })  : createDateTime = createDateTime ?? DateTime.now(),
         latestEditDateTime = DateTime.now();
+
+  factory Note.fromJson(Map<String, dynamic> item) {
+    return Note(
+        noteID: item['noteID'],
+        noteTitle: item['noteTitle'],
+        noteContent: item['noteContent'],
+        createDateTime: DateTime.parse(item['createDatetime']),
+        latestEditDateTime: item['latestEditDateTime'] != null
+            ? DateTime.parse(item['latestEditDateTime'])
+            : null);
+  }
 }
