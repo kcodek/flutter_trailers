@@ -8,6 +8,8 @@ class NoteForListing {
   NoteForListing({
     this.noteID,
     this.noteTitle,
+    // this.createDateTime,
+    // this.latestEditDateTime
     DateTime? createDateTime,
     DateTime? latestEditDateTime,
     //The default value of an optional parameter must be constant.

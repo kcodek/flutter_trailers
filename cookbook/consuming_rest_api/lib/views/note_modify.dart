@@ -88,6 +88,43 @@ class _NoteModifyState extends State<NoteModify> {
                         onPressed: () async {
                           if (isEditing) {
                             //update the note in api
+                            setState(() {
+                              _isLoading = true;
+                            });
+
+                            final note = NoteManipulation(
+                                noteTitle: _titleController.text,
+                                noteContent: _contentController.text);
+                            final result =
+                                await service.updateNote(widget.noteID!, note);
+
+                            setState(() {
+                              _isLoading = false;
+                            });
+
+                            const title = 'Done';
+                            final text = result.error == true
+                                ? (result.errorMessage ?? 'An error occured')
+                                : 'Your note was Updated';
+
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                title: const Text(title),
+                                content: Text(text),
+                                actions: <Widget>[
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('OK'))
+                                ],
+                              ),
+                            ).then((data) {
+                              if (result.data == true) {
+                                Navigator.of(context).pop();
+                              }
+                            });
                           } else {
                             //create the note in api
                             setState(() {
@@ -103,7 +140,7 @@ class _NoteModifyState extends State<NoteModify> {
                               _isLoading = false;
                             });
 
-                            final title = 'Done';
+                            const title = 'Done';
                             final text = result.error == true
                                 ? (result.errorMessage ?? 'An error occured')
                                 : 'Your note was created';
@@ -111,7 +148,7 @@ class _NoteModifyState extends State<NoteModify> {
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(title),
+                                title: const Text(title),
                                 content: Text(text),
                                 actions: <Widget>[
                                   TextButton(
