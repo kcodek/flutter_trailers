@@ -1,4 +1,5 @@
 import 'package:consuming_rest_api/models/note.dart';
+import 'package:consuming_rest_api/models/note_manipulation.dart';
 import 'package:consuming_rest_api/services/notes_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -28,23 +29,28 @@ class _NoteModifyState extends State<NoteModify> {
   void initState() {
     super.initState();
 
-    setState(() {
-      _isLoading = true;
-    });
-    service.getNote(widget.noteID!).then((response) {
+    if (isEditing) {
       setState(() {
-        _isLoading = false;
+        _isLoading = true;
       });
-      if (response.error == true) {
-        errorMessage = response.errorMessage ?? 'An error occured';
-      }
-      note = response.data!;
-      // note = response.data ?? ;
-      // var len = foo?.length ?? 0; // Provide a default value if foo was null.
 
-      _titleController.text = note!.noteTitle!;
-      _contentController.text = note!.noteContent!;
-    });
+      service.getNote(widget.noteID!).then((response) {
+        setState(() {
+          _isLoading = false;
+        });
+        if (response.error == true) {
+          errorMessage = response.errorMessage ?? 'An error occured';
+        }
+        note = response.data;
+        print(response.data);
+        print(response.error);
+        // note = response.data ?? ;
+        // var len = foo?.length ?? 0; // Provide a default value if foo was null.
+
+        _titleController.text = note!.noteTitle!;
+        _contentController.text = note!.noteContent!;
+      });
+    }
   }
 
   @override
@@ -75,17 +81,53 @@ class _NoteModifyState extends State<NoteModify> {
                     ),
                     SizedBox(
                       width: double.infinity,
+                      height: 35,
                       child: ElevatedButton(
-                        onPressed: () {
-                          // if (isEditing) {
-                          //   //update the note in api
-                          // } else {
-                          //   //create the note in api
-                          // }
+                        child: const Text('Submit',
+                            style: TextStyle(color: Colors.white)),
+                        onPressed: () async {
+                          if (isEditing) {
+                            //update the note in api
+                          } else {
+                            //create the note in api
+                            setState(() {
+                              _isLoading = true;
+                            });
 
-                          Navigator.of(context).pop();
+                            final note = NoteManipulation(
+                                noteTitle: _titleController.text,
+                                noteContent: _contentController.text);
+                            final result = await service.createNote(note);
+
+                            setState(() {
+                              _isLoading = false;
+                            });
+
+                            final title = 'Done';
+                            final text = result.error == true
+                                ? (result.errorMessage ?? 'An error occured')
+                                : 'Your note was created';
+
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                title: Text(title),
+                                content: Text(text),
+                                actions: <Widget>[
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('OK'))
+                                ],
+                              ),
+                            ).then((data) {
+                              if (result.data == true) {
+                                Navigator.of(context).pop();
+                              }
+                            });
+                          }
                         },
-                        child: const Text('Submit'),
                       ),
                     )
                   ],

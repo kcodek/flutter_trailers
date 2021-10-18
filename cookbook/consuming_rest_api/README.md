@@ -14,3 +14,8 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+### References
+1. Source code:  https://github.com/boriszv/Programming-Addict-Code-Examples/tree/master/flutter_rest_api/part%205/notes
+1. Server api: https://tq-notes-api-jkrgrdggbq-el.a.run.app/swagger/index.html
