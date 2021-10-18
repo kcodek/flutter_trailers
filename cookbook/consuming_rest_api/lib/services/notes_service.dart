@@ -19,8 +19,8 @@ class NotesService {
         .then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
-        print(jsonData);
-        print(Note.fromJson(jsonData));
+        // print(jsonData);
+        // print(Note.fromJson(jsonData));
 
         return APIResponse<Note>(data: Note.fromJson(jsonData));
       }
@@ -46,6 +46,18 @@ class NotesService {
     return http
         .put(Uri.parse(API + '/notes/' + noteID),
             headers: headers, body: json.encode(item.toJson()))
+        .then((data) {
+      if (data.statusCode == 204) {
+        return APIResponse<bool>(data: true);
+      }
+      return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+    }).catchError((_) =>
+            APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+  }
+
+  Future<APIResponse<bool>> deleteNote(String noteID) {
+    return http
+        .delete(Uri.parse(API + '/notes/' + noteID), headers: headers)
         .then((data) {
       if (data.statusCode == 204) {
         return APIResponse<bool>(data: true);

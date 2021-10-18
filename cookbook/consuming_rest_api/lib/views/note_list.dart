@@ -83,6 +83,8 @@ class _NoteListState extends State<NoteList> {
                 direction: DismissDirection.startToEnd,
                 onDismissed: (direction) {
                   // // Exception A dismissed Dismissible widget is still part of the tree
+                  // // Make sure to implement the onDismissed handler and to immediately remove the Dismissible widget from
+                  // // the application once that handler has fired.
                   // setState(() {
                   //   notes.removeAt(index);
                   // });
@@ -90,7 +92,25 @@ class _NoteListState extends State<NoteList> {
                 confirmDismiss: (direction) async {
                   final result = await showDialog(
                       context: context, builder: (_) => const NoteDelete());
-                  print(result);
+                  if (result) {
+                    final deleteResult = await service
+                        .deleteNote(_apiResponse.data![index].noteID!);
+
+                    var message = '';
+                    if (deleteResult.data == true) {
+                      message = 'The note was deleted successfully';
+                    } else {
+                      message =
+                          deleteResult.errorMessage ?? 'An error occurred';
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                        duration: const Duration(milliseconds: 1000),
+                      ),
+                    );
+                    return deleteResult.data ?? false;
+                  }
                   return result;
                 },
                 background: Container(

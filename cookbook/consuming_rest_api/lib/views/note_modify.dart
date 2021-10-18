@@ -42,8 +42,6 @@ class _NoteModifyState extends State<NoteModify> {
           errorMessage = response.errorMessage ?? 'An error occured';
         }
         note = response.data;
-        print(response.data);
-        print(response.error);
         // note = response.data ?? ;
         // var len = foo?.length ?? 0; // Provide a default value if foo was null.
 
