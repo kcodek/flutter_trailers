@@ -47,9 +47,24 @@
     - Try to create non-nullable variables when possible, as these will be guaranteed to be not null at compile time.
     - If you know that a nullable expression won't be null, you can assign it to a non-nullable variable with the `!` operator.
 
-- Lists
-    - Displaying lists of data is a fundamental pattern for mobile apps. Flutter includes the `ListView` widget to make working with lists a breeze.
+1. Lists
+    - Displaying lists of data is a fundamental pattern for mobile apps. Flutter includes the `ListView` widget to make working with lists a breeze
 
+1. JSON Serializable
+    - package to auto generate json to &  from dart objects
+    - Add the following three lines in the dart file to generate toJson & fomJson methods: 
+        ~~~dart
+        import 'package:json_annotation/json_annotation.dart';
+        part 'note_for_listing.g.dart'; // auto generated file`
+        
+        // @JsonSerializable(explicitToJson: true) // is needed when there are sub classes that need to be converted to JSON
+        @JsonSerializable()
+        class NoteForListing{}
+        ~~~~
+    - using the build_runner, generate the files
+        - `$ flutter packages pub run build_runner build  --delete-conflicting-outputs`
+        - to generate on the fly, use `watch` instead of `build`
+            `$ flutter packages pub run build_runner watch  --delete-conflicting-outputs`
 ------
 1. VSCode tips  for flutter development
     1. shortcuts for templates
@@ -165,6 +180,9 @@
         flutter doctor -v
 
     ~~~
+1. Design Patterns in Flutter
+    1. https://github.com/mkobuolys/flutter-design-patterns
+    1. https://medium.com/flutter-community/flutter-design-patterns-10-factory-method-c53ad11d863f    
 
 1. Dart
     1. https://www.youtube.com/watch?v=Ej_Pcr4uC2Q

@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'note_for_listing.g.dart'; // auto generated file
+
+@JsonSerializable()
 class NoteForListing {
   // for positional parameters
   String? noteID;
@@ -19,13 +24,6 @@ class NoteForListing {
   })  : createDateTime = createDateTime ?? DateTime.now(),
         latestEditDateTime = DateTime.now();
 
-  factory NoteForListing.fromJson(Map<String, dynamic> item) {
-    return NoteForListing(
-        noteID: item['noteID'],
-        noteTitle: item['noteTitle'],
-        createDateTime: DateTime.parse(item['createDateTime']),
-        latestEditDateTime: item['latestEditDateTime'] != null
-            ? DateTime.parse(item['latestEditDateTime'])
-            : null);
-  }
+  factory NoteForListing.fromJson(Map<String, dynamic> item) =>
+      _$NoteForListingFromJson(item);
 }
